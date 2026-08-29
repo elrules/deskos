@@ -1,0 +1,928 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+    /* Prevent text selection and touch highlights */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Theme variables */
+:root[data-theme="dark"] {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --accent: #bb86fc;
+}
+
+:root[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f0f0f0;
+    --bg-tertiary: #e0e0e0;
+    --text-primary: #000000;
+    --text-secondary: #505050;
+    --accent: #6200ee;
+}
+
+/* Default (auto) theme - will use system preference via CSS media query */
+:root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --accent: #bb86fc;
+}
+
+/* Ensure variables are defined even if not overridden */
+body {
+    background-color: var(--bg-primary, #121212);
+    color: var(--text-primary, #ffffff);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f0f0f0;
+        --bg-tertiary: #e0e0e0;
+        --text-primary: #000000;
+        --text-secondary: #505050;
+        --accent: #6200ee;
+    }
+}
+
+/* Apply theme variables */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* App container */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header */
+.app-header {
+    background-color: var(--bg-secondary);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--bg-tertiary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Main content */
+.app-main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Navigation bar */
+.app-nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--bg-tertiary);
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 8px 4px;
+    min-width: 60px;
+}
+
+.nav-btn.active {
+    color: var(--accent);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.nav-label {
+    font-size: 0.85rem;
+}
+
+/* Section-specific styles */
+
+/* Home section (dashboard) */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 20px;
+}
+
+/* Clock container */
+.clock-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.clock {
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.date {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+/* Card style */
+.card {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Card header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-header .icon {
+    font-size: 1.5rem;
+}
+
+/* Weather card specific */
+.weather-info {
+    text-align: center;
+}
+
+.weather-temperature {
+    font-size: 4rem;
+    font-weight: 300;
+    margin: 10px 0;
+}
+
+.weather-condition {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.weather-icon {
+    font-size: 3rem;
+    margin: 10px 0;
+}
+
+/* To-Do list */
+.todo-list {
+    margin-top: 10px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.todo-item:last-child {
+    border-bottom: none;
+}
+
+.todo-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.todo-left input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.todo-text {
+    font-size: 1.1rem;
+}
+
+.todo-text.completed-text {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.todo-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.priority {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.due-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.todo-edit-btn,
+.todo-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.todo-edit-btn:hover,
+.todo-delete-btn:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--bg-tertiary);
+    margin: 16px 0;
+}
+
+.completed-section h3 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.add-task-container {
+    text-align: center;
+    margin-top: 16px;
+}
+
+#add-task-btn {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 60%;
+}
+
+.todo-count {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* School card (home section) */
+.current-class {
+    text-align: center;
+}
+
+.current-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.class-subject {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 8px 0;
+}
+
+.class-time {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.class-room {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.class-notes {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.upcoming-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 16px 0 8px 0;
+}
+
+.upcoming-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.upcoming-item:last-child {
+    border-bottom: none;
+}
+
+.upcoming-subject {
+    font-weight: 500;
+}
+
+.upcoming-time,
+.upcoming-room {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Movie card */
+.movie-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.movie-poster {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.movie-details {
+    flex: 1;
+}
+
+.movie-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.movie-rating {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.movie-runtime {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.movie-notes {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* Gaming card */
+.gaming-info {
+    text-align: center;
+}
+
+.game-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.game-goal {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.game-progress {
+    background-color: var(--bg-tertiary);
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    background-color: var(--accent);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Placeholder */
+.placeholder {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    grid-column: 1 / -1;
+}
+
+/* Overlay for forms */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.form-container {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-container h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.form-group input::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background-color: var(--accent);
+    color: white;
+}
+
+.form-actions button[type="button"] { /* Cancel */
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* School section (full screen) */
+.school-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.school-section h2 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.add-class-container {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+#add-class-btn {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.timetable-list {
+    margin-bottom: 32px;
+}
+
+.timetable-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--bg-tertiary);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.timetable-content {
+    flex: 1;
+}
+
+.timetable-subject {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.timetable-time {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.timetable-room {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.timetable-notes {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.timetable-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.timetable-edit-btn,
+.timetable-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.timetable-edit-btn:hover,
+.timetable-delete-btn:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.current-next-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.current-next-info h3 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.current-class,
+.next-class {
+    background-color: var(--bg-tertiary);
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.current-class h4,
+.next-class h4 {
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+/* Movie section (full screen) */
+.movie-section {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.movie-section h2 {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.movie-details-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.movie-poster-large {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.movie-info-large {
+    text-align: left;
+}
+
+.movie-title-large {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.movie-rating-large {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.movie-runtime-large {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.movie-notes-large {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    text-align: left;
+}
+
+.edit-section {
+    margin-top: 24px;
+}
+
+#edit-movie-btn,
+#edit-gaming-btn {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+/* Gaming section (full screen) */
+.gaming-section {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.gaming-section h2 {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.gaming-details-large {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.game-title-large {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.game-goal-large {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.game-progress-large {
+    text-align: center;
+}
+
+.progress-bar-large {
+    background-color: var(--bg-tertiary);
+    border-radius: 8px;
+    height: 16px;
+    overflow: hidden;
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto 16px auto;
+}
+
+.progress-fill-large {
+    background-color: var(--accent);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-text-large {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Settings section (full screen) */
+.settings-section {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.settings-section h2 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.settings-group {
+    margin-bottom: 24px;
+}
+
+.settings-group h3 {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.setting-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.setting-option:last-child {
+    border-bottom: none;
+}
+
+.setting-option label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.setting-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.setting-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.setting-option input[type="text"],
+.setting-option input[type="time"],
+.setting-option select {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+#cancel-settings-btn,
+#save-settings-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+#save-settings-btn {
+    background-color: var(--accent);
+    color: white;
+}
+
+#cancel-settings-btn {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Make sure the app doesn't scroll on iPad landscape by default */
+body {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#app {
+    overflow-y: auto;
+    /* Enable scrolling only if needed */
+    -webkit-overflow-scrolling: touch;
+}
